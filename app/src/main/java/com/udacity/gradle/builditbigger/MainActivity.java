@@ -1,21 +1,24 @@
 package com.udacity.gradle.builditbigger;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
-import com.erbene.Joker;
+import com.erbene.jokerface.JokeActivity;
+import com.udacity.gradle.builditbigger.rest.GetJokeTask;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements GetJokeTask.Callbacks {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
 
 
@@ -42,8 +45,18 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view){
-        Toast.makeText(this, Joker.getJoke(), Toast.LENGTH_SHORT).show();
+//        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+//        pb.setVisibility(View.VISIBLE);
+        GetJokeTask jokeTask = new GetJokeTask();
+        jokeTask.execute(this);
     }
 
-
+    @Override
+    public void onJokeRetrieved(String joke) {
+        Intent i = new Intent(this, JokeActivity.class);
+        i.putExtra("joke", joke);
+        startActivity(i);
+//        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
+//        pb.setVisibility(View.GONE);
+    }
 }
