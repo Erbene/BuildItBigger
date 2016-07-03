@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * from gist https://gist.github.com/he9lin/2195897
  */
 public class ApplicationTest extends ApplicationTestCase<Application> implements GetJokeTask.Callbacks {
 
