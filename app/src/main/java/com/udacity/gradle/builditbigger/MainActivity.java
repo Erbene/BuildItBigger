@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.erbene.jokerface.JokeActivity;
 import com.udacity.gradle.builditbigger.rest.GetJokeTask;
@@ -14,11 +15,15 @@ import com.udacity.gradle.builditbigger.rest.GetJokeTask;
 
 public class MainActivity extends ActionBarActivity implements GetJokeTask.Callbacks {
 
+    private RelativeLayout mProgressBar;
+    private RelativeLayout mMainLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mProgressBar = (RelativeLayout) findViewById(R.id.progress_layout);
+        mMainLayout = (RelativeLayout) findViewById(R.id.main_layout);
     }
 
 
@@ -45,8 +50,7 @@ public class MainActivity extends ActionBarActivity implements GetJokeTask.Callb
     }
 
     public void tellJoke(View view){
-//        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
-//        pb.setVisibility(View.VISIBLE);
+        showProgress();
         GetJokeTask jokeTask = new GetJokeTask();
         jokeTask.execute(this);
     }
@@ -56,7 +60,17 @@ public class MainActivity extends ActionBarActivity implements GetJokeTask.Callb
         Intent i = new Intent(this, JokeActivity.class);
         i.putExtra("joke", joke);
         startActivity(i);
-//        ProgressBar pb = (ProgressBar) findViewById(R.id.progressBar);
-//        pb.setVisibility(View.GONE);
+        hideProgress();
     }
+    private void hideProgress(){
+        mProgressBar.setVisibility(View.GONE);
+        mMainLayout.setVisibility(View.VISIBLE);
+
+    }
+    private void showProgress(){
+        mProgressBar.setVisibility(View.VISIBLE);
+        mMainLayout.setVisibility(View.GONE);
+
+    }
+
 }
